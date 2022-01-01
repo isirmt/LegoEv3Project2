@@ -107,7 +107,7 @@ void run_task(intptr_t unused)
     //draw 1
 	float centimeter = 16;
 	float npc = 5;
-	float back = -5;
+	float back = 5;
     int power = 40;
 
     DrawStraight(1,14.1f,power/2,1);

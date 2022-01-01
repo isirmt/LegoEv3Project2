@@ -59,7 +59,7 @@ inline void MiddleMotorUp(void)
     ev3_motor_rotate(M_M_PORT, -M_U_DEGREE, M_U_POWER, true);
 }
 
-void DrawStraight(int bf, int centimeter, int power, int withPen) // 1 : forward, 0 : back
+void DrawStraight(int bf, float centimeter, int power, int withPen) // 1 : forward, 0 : back
 {
     if (bf == 0)
         centimeter *= -1;
@@ -75,7 +75,7 @@ void DrawStraight(int bf, int centimeter, int power, int withPen) // 1 : forward
 inline void TurnRightWithGyro(int digree)
 {
     ev3_gyro_sensor_reset(gyro_sensor);
-	 tslp_tsk(1000);
+    tslp_tsk(1000);
     while (1)
     {
         ev3_motor_rotate(L_motor, 10, 30, false);
@@ -92,7 +92,7 @@ inline void TurnRightWithGyro(int digree)
 inline void TurnLeftWithGyro(int digree)
 {
     ev3_gyro_sensor_reset(gyro_sensor);
-	 tslp_tsk(1000);
+    tslp_tsk(1000);
     while (1)
     {
         ev3_motor_rotate(L_motor, -10, 30, false);
@@ -108,150 +108,87 @@ inline void TurnLeftWithGyro(int digree)
 
 void DrawStar()
 {
-    /*// draw 1
-    float forward = 15;
-    float back = -9;
-    int power = 40;
-    int starRotate = 130;
-    int fDigree = (int)(forward / 17.5 * 360);
-    int bDigree = (int)(back / 17.5 * 360);
+    float size = 22;
+    char str[20];
 
-    for (int i = 0; i < 5; i++)
-    {
-        DrawStraight(1, fDigree, power, 1);
-        TurnRightWithGyro(starRotate);
-        DrawStraight(0, bDigree, power, 0); // back
-    }*/
-    // draw sample
-    /*MiddleMotorDown();
-    ev3_motor_rotate(L_motor, fDigree, power, false);
-    ev3_motor_rotate(R_motor, fDigree, power, true);
-    Stop();
-    MiddleMotorUp();
-    // rotate
-    TurnRightWithGyro(starRotate);
-    ev3_motor_rotate(R_motor, bDigree, power, false);
-    ev3_motor_rotate(L_motor, bDigree, power, true);*/
-    	
-    float centimeter = 16;
-	float npc = 5;
-	float back = -6;
-    int power = 40;
-    ev3_motor_stop(M_M_PORT, true);
-    int32_t startval_m = ev3_motor_get_counts(M_M_PORT);
-    KILL_MOTOR();
-    ev3_motor_rotate(M_M_PORT, -M_D_DEGREE, M_D_POWER, true);
     // draw 1
-	int digree = (int)(centimeter / 17.5 * 360);
-	int digb = (int)(back / 17.5 * 360);
-	int din = (int)(npc / 17.5 * 360);
-	ev3_motor_rotate(R_motor, digree, power, false);
-    ev3_motor_rotate(L_motor, digree, power, true);
-    
-    Stop();
-    MiddleMotorUp();
-	
-	ev3_motor_rotate(R_motor, din, power, false);
-    ev3_motor_rotate(L_motor, din, power, true);
-	Stop();
-    // rotate
-    TurnRightWithGyro(133);
-	
-	ev3_motor_rotate(R_motor, digb, power, false);
-    ev3_motor_rotate(L_motor, digb, power, true);
-    // draw 2
-	MiddleMotorDown();
-     ev3_motor_rotate(L_motor, digree, power, false);
-    ev3_motor_rotate(R_motor, digree, power, true);
-    Stop();
-	MiddleMotorUp();
-	
-	ev3_motor_rotate(R_motor, din, power, false);
-    ev3_motor_rotate(L_motor, din, power, true);
-	Stop();
-    // rotate
-    TurnRightWithGyro(126);
-	ev3_motor_rotate(R_motor, digb, power, false);
-    ev3_motor_rotate(L_motor, digb, power, true);
-    // draw 3
-	MiddleMotorDown();
-     ev3_motor_rotate(L_motor, digree, power, false);
-    ev3_motor_rotate(R_motor, digree, power, true);
-    Stop();
-	MiddleMotorUp();
-	
-	ev3_motor_rotate(R_motor, din, power, false);
-    ev3_motor_rotate(L_motor, din, power, true);
-	Stop();
-    // rotate
-    TurnRightWithGyro(120);
-	ev3_motor_rotate(R_motor, digb, power, false);
-    ev3_motor_rotate(L_motor, digb, power, true);
-    // draw 4
-	MiddleMotorDown();
-     ev3_motor_rotate(L_motor, digree, power, false);
-    ev3_motor_rotate(R_motor, digree, power, true);
-    Stop();
-	MiddleMotorUp();
-	
-	ev3_motor_rotate(R_motor, din, power, false);
-    ev3_motor_rotate(L_motor, din, power, true);
-	Stop();
-    // rotate
-    TurnRightWithGyro(133);
-	ev3_motor_rotate(R_motor, digb, power, false);
-    ev3_motor_rotate(L_motor, digb, power, true);
-    // draw 5
-	MiddleMotorDown();
-     ev3_motor_rotate(L_motor, digree, power, false);
-    ev3_motor_rotate(R_motor, digree, power, true);
-    Stop();
-	MiddleMotorUp();
+    float centimeter = 16;
+    float npc = 5;
+    float back = 5;
+    int power = 40;
+
+    DrawStraight(1, 25.7f, power / 2, 1);
+    DrawStraight(1, npc, power / 2, 0);
+
+    TurnRightWithGyro(145);
+    DrawStraight(0, back, power / 2, 0);
+
+    DrawStraight(1, 28.6f, power / 2, 1);
+    DrawStraight(1, npc, power / 2, 0);
+
+    TurnRightWithGyro(144);
+    DrawStraight(0, back, power / 2, 0);
+
+    DrawStraight(1, 29.3f, power / 2, 1);
+    DrawStraight(1, npc, power / 2, 0);
+
+    TurnRightWithGyro(139);
+    DrawStraight(0, back, power / 2, 0);
+
+    DrawStraight(1, 29.0f, power / 2, 1);
+    DrawStraight(1, npc, power / 2, 0);
+
+    TurnRightWithGyro(145);
+    DrawStraight(0, back, power / 2, 0);
+
+    DrawStraight(1, 27.3f, power / 2, 1);
 }
 
 void DrawTriangle()
 {
-    //draw 1
+    // draw 1
     float forward = 12;
     float back = 6;
     int power = 40;
     int triangleRotate = 120;
     int fDigree = forward;
     int bDigree = back;
-	
-	for (int i = 0; i < 3; i++)
+
+    for (int i = 0; i < 3; i++)
     {
-    	if ( i == 1) DrawStraight(1, 25, power, 1);
-    	else DrawStraight(1, 15, power, 1);
-	DrawStraight(1, 3, power, 0);
-    TurnRightWithGyro(triangleRotate);
-    	//if ( i == 1) TurnRightWithGyro(40);
-    DrawStraight(0, bDigree, power, 0); // back
+        if (i == 1)
+            DrawStraight(1, 25, power, 1);
+        else
+            DrawStraight(1, 15, power, 1);
+        DrawStraight(1, 3, power, 0);
+        TurnRightWithGyro(triangleRotate);
+        // if ( i == 1) TurnRightWithGyro(40);
+        DrawStraight(0, bDigree, power, 0); // back
     }
 }
 
-void DrawSquare()
+void DrawSquare() // ok
 {
     // draw 1
     float forward = 7;
-    float back = 6;
-    int power = 40;
+    float back = 5;
+    int power = 20;
     int squareRotate = 80;
     int fDigree = forward;
     int bDigree = back;
 
-	for (int i = 0; i < 4; i++)
+    for (int i = 0; i < 4; i++)
     {
-    	//if ( i == 2) DrawStraight(1, 22, power, 1);
-    	  DrawStraight(1, 15, power, 1);
-	DrawStraight(1, 3, power, 0);
-    TurnRightWithGyro(squareRotate);
-    	//if ( i == 1) TurnLeftWithGyro(20);
-    DrawStraight(0, bDigree, power, 0); // back
+        // if ( i == 2) DrawStraight(1, 22, power, 1);
+        DrawStraight(1, 15, power, 1);
+        DrawStraight(1, 5, power, 0);
+        TurnRightWithGyro(squareRotate);
+        // if ( i == 1) TurnLeftWithGyro(20);
+        DrawStraight(0, bDigree, power, 0); // back
     }
 }
 
-void DrawCircle()
+void DrawCircle() // ok
 {
     // draw 1
     float forward = 6;
@@ -261,7 +198,7 @@ void DrawCircle()
     int fDigree = forward;
     int bDigree = back;
 
-	DrawStraight(1, fDigree, power, 0);
+    DrawStraight(1, fDigree, power, 0);
     MiddleMotorDown();
     ev3_motor_rotate(L_motor, 1600, 40, true);
     MiddleMotorUp();
@@ -282,7 +219,7 @@ void run_task(intptr_t unused)
         bc = 0;
         ev3_motor_rotate(L_motor, (int)(1 / tireCir * 360), power, false);
         ev3_motor_rotate(R_motor, (int)(1 / tireCir * 360), power, true);
-    	tslp_tsk(50);
+        tslp_tsk(50);
 
         colorid_t now_color = ev3_color_sensor_get_color(color_sensor);
         switch (now_color)
@@ -325,138 +262,27 @@ void run_task(intptr_t unused)
     switch (shape)
     {
     case 1: // cir
-        // forward
-        /*ev3_motor_rotate(L_motor, (int)(5 / tireCir * 360), power, false);
-        ev3_motor_rotate(R_motor, (int)(5 / tireCir * 360), power, true);
-        Stop();
-
-        // draw
-        tslp_tsk(WAIT_TIME_MS);
-        ev3_motor_rotate(L_motor, (int)(3.14 * size * 90 / 360), power, false);
-        ev3_motor_rotate(R_motor, -(int)(3.14 * size * 90 / 360), power, true);
-        Stop();
-        tslp_tsk(WAIT_TIME_MS);
-        MiddleMotorDown();
-        ev3_motor_rotate(L_motor, -(int)(3.14 * (size + 15) * 360 / 360), power, false); // 直径15
-        ev3_motor_rotate(R_motor, (int)(3.14 * 15 * 360 / 360), power, true);
-        Stop();
-        MiddleMotorUp();
-        break;*/
 
         DrawStraight(1, 2, 40, 0);
         DrawCircle();
         break;
     case 2: // tri
-        /*ev3_motor_rotate(L_motor, (int)(12.4 / tireCir * 360), power, false);
-        ev3_motor_rotate(R_motor, (int)(12.4 / tireCir * 360), power, true);
 
-        ev3_motor_rotate(L_motor, -(int)(3.14 * size * 135 / 360), power, false);
-        ev3_motor_rotate(R_motor, (int)(3.14 * size * 135 / 360), power, true);
-
-        // draw 1
-        ForwardAndaWrite(23.46);
-
-        TurnLeftWithGyro(135);
-
-        // draw 2
-        ForwardAndaWrite(33.18);
-
-        TurnLeftWithGyro(135);
-
-        // draw 3
-        ForwardAndaWrite(23.46);
-        break;*/
-
-        //ev3_motor_rotate(R_motor, 120, power, true);
-    	//DrawStraight(0, 5, 40, 0);
-    	Stop();
+        Stop();
         DrawTriangle();
         break;
 
     case 3: // sq
-        /*ev3_motor_rotate(L_motor, (int)(16 / tireCir * 360), power, false);
-        ev3_motor_rotate(R_motor, (int)(16 / tireCir * 360), power, true);
 
-        TurnLeftWithGyro(135);
-        tslp_tsk(WAIT_TIME_MS);
-
-        for (int i = 0; i < 4; i++)
-        {
-            ForwardAndaWrite(19.6);
-
-            if (i == 3)
-                break;
-
-            TurnLeftWithGyro(90);
-        }
-        MiddleMotorUp();
-        break;*/
-
-        
-    	//ev3_motor_rotate(R_motor, 120, power, true);
-    	//DrawStraight(0, 5, 40, 0);
-    	Stop();
-        //TurnLeftWithGyro(45);
+        DrawStraight(0, 2, 20, 0);
+        Stop();
         DrawSquare();
         break;
 
     case 4:
 
-        /*MiddleMotorDown();
-        // draw 1
-        int digree = (int)(centi / 17.5 * 360);
-        int digb = (int)(back / 17.5 * 360);
-        ev3_motor_rotate(R_motor, digree, power, false);
-        ev3_motor_rotate(L_motor, digree, power, true);
-
+        DrawStraight(0, 12.1f, 20, 0);
         Stop();
-        MiddleMotorUp();
-        // rotate
-        TurnRightWithGyro(130);
-
-        ev3_motor_rotate(R_motor, digb, power, false);
-        ev3_motor_rotate(L_motor, digb, power, true);
-        // draw 2
-        MiddleMotorDown();
-        ev3_motor_rotate(L_motor, digree, power, false);
-        ev3_motor_rotate(R_motor, digree, power, true);
-        Stop();
-        MiddleMotorUp();
-        // rotate
-        TurnRightWithGyro(130);
-        ev3_motor_rotate(R_motor, digb, power, false);
-        ev3_motor_rotate(L_motor, digb, power, true);
-        // draw 3
-        MiddleMotorDown();
-        ev3_motor_rotate(L_motor, digree, power, false);
-        ev3_motor_rotate(R_motor, digree, power, true);
-        Stop();
-        MiddleMotorUp();
-        // rotate
-        TurnRightWithGyro(130);
-        ev3_motor_rotate(R_motor, digb, power, false);
-        ev3_motor_rotate(L_motor, digb, power, true);
-        // draw 4
-        MiddleMotorDown();
-        ev3_motor_rotate(L_motor, digree, power, false);
-        ev3_motor_rotate(R_motor, digree, power, true);
-        Stop();
-        MiddleMotorUp();
-        // rotate
-        TurnRightWithGyro(130);
-        ev3_motor_rotate(R_motor, digb, power, false);
-        ev3_motor_rotate(L_motor, digb, power, true);
-        // draw 5
-        MiddleMotorDown();
-        ev3_motor_rotate(L_motor, digree, power, false);
-        ev3_motor_rotate(R_motor, digree, power, true);
-        Stop();
-        MiddleMotorUp();
-
-        break;*/
-
-        //DrawStraight(0, 3, 40, 0);
-        //TurnLeftWithGyro(40);
         DrawStar();
         break;
     }
