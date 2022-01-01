@@ -30,6 +30,75 @@
 
 const uint32_t WAIT_TIME_MS = 100;
 
+inline void Stop()
+{
+    ev3_motor_stop(L_motor, true);
+    ev3_motor_stop(R_motor, true);
+    tslp_tsk(WAIT_TIME_MS);
+}
+
+inline void MiddleMotorDown(void)
+{
+    ev3_motor_stop(M_M_PORT, true);
+    int32_t startval_m = ev3_motor_get_counts(M_M_PORT);
+    KILL_MOTOR();
+    ev3_motor_rotate(M_M_PORT, -M_D_DEGREE, M_D_POWER, true);
+}
+inline void MiddleMotorUp(void)
+{
+    ev3_motor_stop(M_M_PORT, true);
+    int32_t startval_m = ev3_motor_get_counts(M_M_PORT);
+    KILL_MOTOR();
+    ev3_motor_rotate(M_M_PORT, -M_U_DEGREE, M_U_POWER, true);
+}
+
+void DrawStraight(int bf, float centimeter, int power, int withPen) // 1 : forward, 0 : back
+{
+    if (bf == 0)
+        centimeter *= -1;
+    if (withPen == 1)
+        MiddleMotorDown();
+    ev3_motor_rotate(L_motor, (int)((float)centimeter / 16.0f * 360.0f), power, false);
+    ev3_motor_rotate(R_motor, (int)((float)centimeter / 16.0f * 360.0f), power, true);
+    Stop();
+    if (withPen == 1)
+        MiddleMotorUp();
+}
+
+inline void TurnRightWithGyro(int digree)
+{
+    ev3_gyro_sensor_reset(gyro_sensor);
+	 tslp_tsk(1000);
+    while (1)
+    {
+        ev3_motor_rotate(L_motor, 10, 30, false);
+        ev3_motor_rotate(R_motor, -10, 30, true);
+        if (ev3_gyro_sensor_get_angle(gyro_sensor) >= digree)
+        {
+            Stop();
+            break;
+        }
+        tslp_tsk(50);
+    }
+}
+
+inline void TurnLeftWithGyro(int digree)
+{
+    ev3_gyro_sensor_reset(gyro_sensor);
+	 tslp_tsk(1000);
+    while (1)
+    {
+        ev3_motor_rotate(L_motor, -10, 30, false);
+        ev3_motor_rotate(R_motor, 10, 30, true);
+        if (ev3_gyro_sensor_get_angle(gyro_sensor) <= -digree)
+        {
+            Stop();
+            break;
+        }
+        tslp_tsk(50);
+    }
+}
+
 void run_task(intptr_t unused)
 {
     float size = 22;
@@ -38,78 +107,106 @@ void run_task(intptr_t unused)
     //draw 1
 	float centimeter = 16;
 	float npc = 5;
-	float back = -6;
+	float back = -5;
     int power = 40;
-    ev3_motor_stop(M_M_PORT, true);
-    int32_t startval_m = ev3_motor_get_counts(M_M_PORT);
-    KILL_MOTOR();
-    ev3_motor_rotate(M_M_PORT, -M_D_DEGREE, M_D_POWER, true);
-    // draw 1
-	int digree = (int)(centimeter / 17.5 * 360);
-	int digb = (int)(back / 17.5 * 360);
-	int din = (int)(npc / 17.5 * 360);
-	ev3_motor_rotate(R_motor, digree, power, false);
-    ev3_motor_rotate(L_motor, digree, power, true);
+
+    DrawStraight(1,14.1f,power/2,1);
+    DrawStraight(1,npc,power/2,0);
+
+    TurnRightWithGyro(145);
+    DrawStraight(0,back,power/2,0);
+
+    DrawStraight(1,15.7f,power/2,1);
+    DrawStraight(1,npc,power/2,0);
+
+    TurnRightWithGyro(144);
+    DrawStraight(0,back,power/2,0);
+
+    DrawStraight(1,16.2f,power/2,1);
+    DrawStraight(1,npc,power/2,0);
+
+    TurnRightWithGyro(139);
+    DrawStraight(0,back,power/2,0);
+
+    DrawStraight(1,16.1f,power/2,1);
+    DrawStraight(1,npc,power/2,0);
+
+    TurnRightWithGyro(145);
+    DrawStraight(0,back,power/2,0);
+
+    DrawStraight(1,15.1f,power/2,1);
+    //DrawStraight(1,npc,power/2,0);
+
+    // ev3_motor_stop(M_M_PORT, true);
+    // int32_t startval_m = ev3_motor_get_counts(M_M_PORT);
+    // KILL_MOTOR();
+    // ev3_motor_rotate(M_M_PORT, -M_D_DEGREE, M_D_POWER, true);
+    // // draw 1
+	// int digree = (int)(centimeter / 17.5 * 360);
+	// int digb = (int)(back / 17.5 * 360);
+	// int din = (int)(npc / 17.5 * 360);
+	// ev3_motor_rotate(R_motor, digree, power, false);
+    // ev3_motor_rotate(L_motor, digree, power, true);
     
-    Stop();
-    MiddleMotorUp();
+    // Stop();
+    // MiddleMotorUp();
 	
-	ev3_motor_rotate(R_motor, din, power, false);
-    ev3_motor_rotate(L_motor, din, power, true);
-	Stop();
-    // rotate
-    TurnRightWithGyro(133);
+	// ev3_motor_rotate(R_motor, din, power, false);
+    // ev3_motor_rotate(L_motor, din, power, true);
+	// Stop();
+    // // rotate
+    // TurnRightWithGyro(133);
 	
-	ev3_motor_rotate(R_motor, digb, power, false);
-    ev3_motor_rotate(L_motor, digb, power, true);
-    // draw 2
-	MiddleMotorDown();
-     ev3_motor_rotate(L_motor, digree, power, false);
-    ev3_motor_rotate(R_motor, digree, power, true);
-    Stop();
-	MiddleMotorUp();
+	// ev3_motor_rotate(R_motor, digb, power, false);
+    // ev3_motor_rotate(L_motor, digb, power, true);
+    // // draw 2
+	// MiddleMotorDown();
+    //  ev3_motor_rotate(L_motor, digree, power, false);
+    // ev3_motor_rotate(R_motor, digree, power, true);
+    // Stop();
+	// MiddleMotorUp();
 	
-	ev3_motor_rotate(R_motor, din, power, false);
-    ev3_motor_rotate(L_motor, din, power, true);
-	Stop();
-    // rotate
-    TurnRightWithGyro(126);
-	ev3_motor_rotate(R_motor, digb, power, false);
-    ev3_motor_rotate(L_motor, digb, power, true);
-    // draw 3
-	MiddleMotorDown();
-     ev3_motor_rotate(L_motor, digree, power, false);
-    ev3_motor_rotate(R_motor, digree, power, true);
-    Stop();
-	MiddleMotorUp();
+	// ev3_motor_rotate(R_motor, din, power, false);
+    // ev3_motor_rotate(L_motor, din, power, true);
+	// Stop();
+    // // rotate
+    // TurnRightWithGyro(126);
+	// ev3_motor_rotate(R_motor, digb, power, false);
+    // ev3_motor_rotate(L_motor, digb, power, true);
+    // // draw 3
+	// MiddleMotorDown();
+    //  ev3_motor_rotate(L_motor, digree, power, false);
+    // ev3_motor_rotate(R_motor, digree, power, true);
+    // Stop();
+	// MiddleMotorUp();
 	
-	ev3_motor_rotate(R_motor, din, power, false);
-    ev3_motor_rotate(L_motor, din, power, true);
-	Stop();
-    // rotate
-    TurnRightWithGyro(120);
-	ev3_motor_rotate(R_motor, digb, power, false);
-    ev3_motor_rotate(L_motor, digb, power, true);
-    // draw 4
-	MiddleMotorDown();
-     ev3_motor_rotate(L_motor, digree, power, false);
-    ev3_motor_rotate(R_motor, digree, power, true);
-    Stop();
-	MiddleMotorUp();
+	// ev3_motor_rotate(R_motor, din, power, false);
+    // ev3_motor_rotate(L_motor, din, power, true);
+	// Stop();
+    // // rotate
+    // TurnRightWithGyro(120);
+	// ev3_motor_rotate(R_motor, digb, power, false);
+    // ev3_motor_rotate(L_motor, digb, power, true);
+    // // draw 4
+	// MiddleMotorDown();
+    //  ev3_motor_rotate(L_motor, digree, power, false);
+    // ev3_motor_rotate(R_motor, digree, power, true);
+    // Stop();
+	// MiddleMotorUp();
 	
-	ev3_motor_rotate(R_motor, din, power, false);
-    ev3_motor_rotate(L_motor, din, power, true);
-	Stop();
-    // rotate
-    TurnRightWithGyro(133);
-	ev3_motor_rotate(R_motor, digb, power, false);
-    ev3_motor_rotate(L_motor, digb, power, true);
-    // draw 5
-	MiddleMotorDown();
-     ev3_motor_rotate(L_motor, digree, power, false);
-    ev3_motor_rotate(R_motor, digree, power, true);
-    Stop();
-	MiddleMotorUp();
+	// ev3_motor_rotate(R_motor, din, power, false);
+    // ev3_motor_rotate(L_motor, din, power, true);
+	// Stop();
+    // // rotate
+    // TurnRightWithGyro(133);
+	// ev3_motor_rotate(R_motor, digb, power, false);
+    // ev3_motor_rotate(L_motor, digb, power, true);
+    // // draw 5
+	// MiddleMotorDown();
+    //  ev3_motor_rotate(L_motor, digree, power, false);
+    // ev3_motor_rotate(R_motor, digree, power, true);
+    // Stop();
+	// MiddleMotorUp();
 }
 
 void main_task(intptr_t unused)
