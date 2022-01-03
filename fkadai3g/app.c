@@ -113,13 +113,13 @@ inline void TurnLeftWithGyro(int digree)
 
 void run_task(intptr_t unused)
 {
-    int power = 40;
+    int power = 20;
     float size = 22;
-    float back = 6;
+    float back = 5;
     float tireCir = 17.5;
     int16_t distance;
     distance = (int)ev3_ultrasonic_sensor_get_distance(ultraSonic_sensor);
-    tslp_tsk(3000);
+    tslp_tsk(3000); // 待機用
     distance = 20;
     int bDigree = back;
 
@@ -141,19 +141,19 @@ void run_task(intptr_t unused)
 
     tslp_tsk(WAIT_TIME_MS);
 
-    DrawStraight(0, 10, 40, 1);
-    DrawStraight(1, 3, power, 0);
+    DrawStraight(0, 10, power, 1);
+    DrawStraight(1, 5, power, 0);
 
     TurnLeftWithGyro(90);
     DrawStraight(0, bDigree, power, 0);
 
-    DrawStraight(1, 10, 40, 1);
+    DrawStraight(1, 10, power, 1);
     DrawStraight(1, 3, power, 0);
 
     TurnRightWithGyro(135);
     DrawStraight(0, bDigree, power, 0);
 
-    DrawStraight(1, (int)(10.0f * 1.41f), 40, 1);
+    DrawStraight(1, (int)(10.0f * 1.41f), power, 1);
 }
 
 void main_task(intptr_t unused)
