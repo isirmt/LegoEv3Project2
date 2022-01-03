@@ -127,101 +127,141 @@ void run_task(intptr_t unused)
     distance /= 10;
 
     int length = 8;
-    int backLength = 9;
+    int backLength = 5;
+    int npc = 5;
     switch (distance)
     {
     case 1:
     case 2:
     case 3:
         DrawStraight(1, length, 40, 1);
+        DrawStraight(1, npc, 40, 0);
+
         if (distance == 1)
             break;
         TurnRightWithGyro(90);
-        DrawStraight(1, 3, 40, 0);
+        DrawStraight(1, npc, 40, 0);
+
         TurnRightWithGyro(90);
         DrawStraight(0, backLength, 40, 0);
+
         DrawStraight(1, length, 40, 1);
+        DrawStraight(1, npc, 40, 0);
 
         if (distance == 2)
             break;
         TurnLeftWithGyro(90);
-        DrawStraight(1, 3, 40, 0);
+        DrawStraight(1, npc, 40, 0);
+
         TurnLeftWithGyro(90);
         DrawStraight(0, backLength, 40, 0);
+
         DrawStraight(1, length, 40, 1);
+        DrawStraight(1, npc, 40, 0);
+
         break;
     case 4:
         DrawStraight(1, length, 40, 1);
+        DrawStraight(1, npc, 40, 0);
+
         TurnRightWithGyro(90);
-        DrawStraight(1, 3, 40, 0);
+        DrawStraight(1, npc, 40, 0);
 
         TurnRightWithGyro(60);
         DrawStraight(0, backLength, 40, 0);
+
         DrawStraight(1, 9, 40, 1);
+        DrawStraight(1, npc, 40, 0);
+
         TurnLeftWithGyro(90);
         DrawStraight(0, backLength, 40, 0);
+
         DrawStraight(1, 9, 40, 1);
-        TRaDrawVaTR();
         break;
     case 5:
     case 6:
     case 7:
     case 8:
         DrawStraight(1, length, 40, 0);
+        DrawStraight(1, npc, 40, 0);
+
         TurnRightWithGyro(90);
-        DrawStraight(1, 3, 40, 0);
+        //DrawStraight(1, npc, 40, 0);
 
         TurnRightWithGyro(60);
         DrawStraight(0, backLength, 40, 0);
+
         DrawStraight(1, 9, 40, 1);
+        DrawStraight(1, npc, 40, 0);
+
         TurnLeftWithGyro(90);
         DrawStraight(0, backLength, 40, 0);
+
         DrawStraight(1, 9, 40, 1);
-        TRaDrawVaTR();
+        DrawStraight(1, npc, 40, 0);
+
         if (distance == 5)
             break;
         TurnRightWithGyro(60);
-        DrawStraight(1, 3, 40, 0);
+        DrawStraight(1, npc, 40, 0);
+
         TurnRightWithGyro(90);
         DrawStraight(0, backLength, 40, 0);
+
         DrawStraight(1, length, 40, 1);
+        DrawStraight(1, npc, 40, 0);
+
         if (distance == 6)
             break;
+
         TurnLeftWithGyro(90);
-        DrawStraight(1, 3, 40, 0);
+        DrawStraight(1, npc, 40, 0);
+
         TurnLeftWithGyro(90);
         DrawStraight(0, backLength, 40, 0);
+
         DrawStraight(1, length, 40, 1);
+        DrawStraight(1, npc, 40, 0);
+
         if (distance == 7)
             break;
-        TurnRightWithGyro(60);
-        DrawStraight(1, 3, 40, 0);
+
+        TurnRightWithGyro(90);
+        DrawStraight(1, npc, 40, 0);
+
         TurnRightWithGyro(90);
         DrawStraight(0, backLength, 40, 0);
+
         DrawStraight(1, length, 40, 1);
+
         break;
     case 9:
         DrawStraight(1, length, 40, 1);
+        DrawStraight(1, npc, 40, 0);
+
         TurnRightWithGyro(90);
-        DrawStraight(1, 3, 40, 0);
+
         TurnRightWithGyro(60);
         DrawStraight(0, backLength, 40, 0);
+
         DrawStraight(1, 9, 40, 1);
+        DrawStraight(1, npc, 40, 0);
+
         TurnLeftWithGyro(120);
         DrawStraight(0, backLength, 40, 0);
+
         DrawStraight(1, length, 40, 0);
+        DrawStraight(1, npc, 40, 0);
+
         TurnLeftWithGyro(120);
         DrawStraight(0, backLength, 40, 0);
+
         DrawStraight(1, 9, 40, 0);
         break;
     default:
         break;
     }
     tslp_tsk(WAIT_TIME_MS);
-    /*
-ev3_motor_rotate(L_motor, -(int)(3.14 * size * 90 / 360), power, false);
-    ev3_motor_rotate(R_motor, (int)(3.14 * size * 90 / 360), power, true);
-    */
 }
 
 void main_task(intptr_t unused)
