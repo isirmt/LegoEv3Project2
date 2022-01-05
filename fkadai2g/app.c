@@ -148,23 +148,37 @@ void DrawTriangle()
 {
     // draw 1
     float forward = 12;
-    float back = 6;
+    float back = 5;
     int power = 40;
     int triangleRotate = 120;
     int fDigree = forward;
     int bDigree = back;
 
-    for (int i = 0; i < 3; i++)
-    {
-        if (i == 1)
-            DrawStraight(1, 25, power, 1);
-        else
-            DrawStraight(1, 15, power, 1);
-        DrawStraight(1, 3, power, 0);
-        TurnRightWithGyro(triangleRotate);
-        // if ( i == 1) TurnRightWithGyro(40);
-        DrawStraight(0, bDigree, power, 0); // back
-    }
+    DrawStraight(1, 15.0f, power / 2, 1);
+    DrawStraight(1, 5.0f, power / 2, 0);
+
+    TurnRightWithGyro(135);
+    DrawStraight(0, back, power / 2, 0);
+
+    DrawStraight(1, 21.2f, power / 2, 1);
+    DrawStraight(1, 5.0f, power / 2, 0);
+
+    TurnRightWithGyro(135);
+    DrawStraight(0, back, power / 2, 0);
+
+    DrawStraight(1, 15.0f, power / 2, 1);
+
+    // for (int i = 0; i < 3; i++)
+    // {
+    //     if (i == 1)
+    //         DrawStraight(1, 25, power, 1);
+    //     else
+    //         DrawStraight(1, 15, power, 1);
+    //     DrawStraight(1, 5, power, 0);
+    //     TurnRightWithGyro(triangleRotate);
+    //     // if ( i == 1) TurnRightWithGyro(40);
+    //     DrawStraight(0, bDigree, power, 0); // back
+    // }
 }
 
 void DrawSquare() // ok
