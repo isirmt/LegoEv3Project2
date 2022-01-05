@@ -130,6 +130,7 @@ void run_task(intptr_t unused)
         Stop();
 
         distance = (int)ev3_ultrasonic_sensor_get_distance(ultraSonic_sensor);
+        tslp_tsk(1000); 
 
         if (distance <= 10)
         {

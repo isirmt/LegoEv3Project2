@@ -129,6 +129,9 @@ void run_task(intptr_t unused)
     int length = 8;
     int backLength = 5;
     int npc = 5;
+
+    DrawStraight(1, 5, power, 0);
+
     switch (distance)
     {
     case 1:
