@@ -36,14 +36,12 @@ const uint32_t WAIT_TIME_MS = 100;
 inline void MiddleMotorDown(void)
 {
     ev3_motor_stop(M_M_PORT, true);
-    int32_t startval_m = ev3_motor_get_counts(M_M_PORT);
     KILL_MOTOR();
     ev3_motor_rotate(M_M_PORT, -M_D_DEGREE, M_D_POWER, true);
 }
 inline void MiddleMotorUp(void)
 {
     ev3_motor_stop(M_M_PORT, true);
-    int32_t startval_m = ev3_motor_get_counts(M_M_PORT);
     KILL_MOTOR();
     ev3_motor_rotate(M_M_PORT, -M_U_DEGREE, M_U_POWER, true);
 }
@@ -64,7 +62,6 @@ void DrawStraight(int bf, int centimeter, int power, int withPen) // 1 : forward
 inline void ForwardAndaWrite(float centimeter)
 {
     int power = 20;
-    float tireCir = 17.5;
     MiddleMotorDown();
     // draw 1
     ev3_motor_rotate(L_motor, (int)(centimeter / 17.5 * 360), power, false);
@@ -108,8 +105,6 @@ inline void TurnLeftWithGyro(int digree)
 void run_task(intptr_t unused)
 {
     int power = 20;
-    float size = 22;
-    int shape = 0; // 1:circle 2:tri 3:sq 4:star
     int distance = (int)ev3_ultrasonic_sensor_get_distance(ultraSonic_sensor);
     tslp_tsk(2000);
     ev3_motor_rotate(L_motor, (int)(0.5 / 17.5 * 360), power, false);
@@ -124,136 +119,136 @@ void run_task(intptr_t unused)
     int backLength = 5;
     int npc = 5;
 
-    DrawStraight(1, 5, power, 0);
+    DrawStraight(true, 5, power, 0);
 
     switch (distance)
     {
     case 1:
     case 2:
     case 3:
-        DrawStraight(1, length, power, 1);
-        DrawStraight(1, npc, power, 0);
+        DrawStraight(true, length, power, 1);
+        DrawStraight(true, npc, power, 0);
 
         if (distance == 1)
             break;
         TurnRightWithGyro(90);
-        DrawStraight(1, npc, power, 0);
+        DrawStraight(true, npc, power, 0);
 
         TurnRightWithGyro(90);
-        DrawStraight(0, backLength, power, 0);
+        DrawStraight(false, backLength, power, 0);
 
-        DrawStraight(1, length, power, 1);
-        DrawStraight(1, npc, power, 0);
+        DrawStraight(true, length, power, 1);
+        DrawStraight(true, npc, power, 0);
 
         if (distance == 2)
             break;
         TurnLeftWithGyro(90);
-        DrawStraight(1, npc, power, 0);
+        DrawStraight(true, npc, power, 0);
 
         TurnLeftWithGyro(90);
-        DrawStraight(0, backLength, power, 0);
+        DrawStraight(false, backLength, power, 0);
 
-        DrawStraight(1, length, power, 1);
-        DrawStraight(1, npc, power, 0);
+        DrawStraight(true, length, power, 1);
+        DrawStraight(true, npc, power, 0);
 
         break;
     case 4:
-        DrawStraight(1, length, power, 1);
-        DrawStraight(1, npc, power, 0);
+        DrawStraight(true, length, power, 1);
+        DrawStraight(true, npc, power, 0);
 
         TurnRightWithGyro(90);
-        DrawStraight(1, npc, power, 0);
+        DrawStraight(true, npc, power, 0);
 
         TurnRightWithGyro(60);
-        DrawStraight(0, backLength, power, 0);
+        DrawStraight(false, backLength, power, 0);
 
-        DrawStraight(1, 9, power, 1);
-        DrawStraight(1, npc, power, 0);
+        DrawStraight(true, 9, power, 1);
+        DrawStraight(true, npc, power, 0);
 
         TurnLeftWithGyro(90);
-        DrawStraight(0, backLength, power, 0);
+        DrawStraight(false, backLength, power, 0);
 
-        DrawStraight(1, 9, power, 1);
+        DrawStraight(true, 9, power, 1);
         break;
     case 5:
     case 6:
     case 7:
     case 8:
-        DrawStraight(1, length, power, 0);
-        DrawStraight(1, npc, power, 0);
+        DrawStraight(true, length, power, 0);
+        DrawStraight(true, npc, power, 0);
 
         TurnRightWithGyro(90);
-        // DrawStraight(1, npc, power, 0);
+        // DrawStraight(true, npc, power, 0);
 
         TurnRightWithGyro(60);
-        DrawStraight(0, backLength, power, 0);
+        DrawStraight(false, backLength, power, 0);
 
-        DrawStraight(1, 9, power, 1);
-        DrawStraight(1, npc, power, 0);
+        DrawStraight(true, 9, power, 1);
+        DrawStraight(true, npc, power, 0);
 
         TurnLeftWithGyro(90);
-        DrawStraight(0, backLength, power, 0);
+        DrawStraight(false, backLength, power, 0);
 
-        DrawStraight(1, 9, power, 1);
-        DrawStraight(1, npc, power, 0);
+        DrawStraight(true, 9, power, 1);
+        DrawStraight(true, npc, power, 0);
 
         if (distance == 5)
             break;
         TurnRightWithGyro(60);
-        DrawStraight(1, npc, power, 0);
+        DrawStraight(true, npc, power, 0);
 
         TurnRightWithGyro(90);
-        DrawStraight(0, backLength, power, 0);
+        DrawStraight(false, backLength, power, 0);
 
-        DrawStraight(1, length, power, 1);
-        DrawStraight(1, npc, power, 0);
+        DrawStraight(true, length, power, 1);
+        DrawStraight(true, npc, power, 0);
 
         if (distance == 6)
             break;
 
         TurnLeftWithGyro(90);
-        DrawStraight(1, npc, power, 0);
+        DrawStraight(true, npc, power, 0);
 
         TurnLeftWithGyro(90);
-        DrawStraight(0, backLength, power, 0);
+        DrawStraight(false, backLength, power, 0);
 
-        DrawStraight(1, length, power, 1);
-        DrawStraight(1, npc, power, 0);
+        DrawStraight(true, length, power, 1);
+        DrawStraight(true, npc, power, 0);
 
         if (distance == 7)
             break;
 
         TurnRightWithGyro(90);
-        DrawStraight(1, npc, power, 0);
+        DrawStraight(true, npc, power, 0);
 
         TurnRightWithGyro(90);
-        DrawStraight(0, backLength, power, 0);
+        DrawStraight(false, backLength, power, 0);
 
-        DrawStraight(1, length, power, 1);
+        DrawStraight(true, length, power, 1);
 
         break;
     case 9:
-        DrawStraight(1, length, power, 1);
-        DrawStraight(1, npc, power, 0);
+        DrawStraight(true, length, power, 1);
+        DrawStraight(true, npc, power, 0);
 
         TurnRightWithGyro(90);
 
         TurnRightWithGyro(60);
-        DrawStraight(0, backLength, power, 0);
+        DrawStraight(false, backLength, power, 0);
 
-        DrawStraight(1, 9, power, 1);
-        DrawStraight(1, npc, power, 0);
-
-        TurnLeftWithGyro(120);
-        DrawStraight(0, backLength, power, 0);
-
-        DrawStraight(1, length, power, 0);
-        DrawStraight(1, npc, power, 0);
+        DrawStraight(true, 9, power, 1);
+        DrawStraight(true, npc, power, 0);
 
         TurnLeftWithGyro(120);
-        DrawStraight(0, backLength, power, 0);
+        DrawStraight(false, backLength, power, 0);
 
-        DrawStraight(1, 9, power, 0);
+        DrawStraight(true, length, power, 0);
+        DrawStraight(true, npc, power, 0);
+
+        TurnLeftWithGyro(120);
+        DrawStraight(false, backLength, power, 0);
+
+        DrawStraight(true, 9, power, 0);
         break;
     default:
         break;
