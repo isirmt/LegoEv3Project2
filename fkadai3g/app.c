@@ -135,18 +135,18 @@ void run_task(intptr_t unused)
 	tslp_tsk(WAIT_TIME_MS);
 
 	DrawStraight(0, 10, power, 1);
-	DrawStraight(1, 5, power, 0);
+	DrawStraight(true, 5, power, 0);
 
 	TurnLeftWithGyro(90);
 	DrawStraight(0, bDigree, power, 0);
 
-	DrawStraight(1, 10, power, 1);
-	DrawStraight(1, 3, power, 0);
+	DrawStraight(true, 10, power, 1);
+	DrawStraight(true, 3, power, 0);
 
 	TurnRightWithGyro(135);
 	DrawStraight(0, bDigree, power, 0);
 
-	DrawStraight(1, (int)(10.0f * 1.41f), power, 1);
+	DrawStraight(true, (int)(10.0f * 1.41f), power, 1);
 }
 
 void main_task(intptr_t unused)

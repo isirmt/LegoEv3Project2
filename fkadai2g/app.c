@@ -16,7 +16,7 @@
 #define color_sensor EV3_PORT_4
 #define ultraSonic_sensor EV3_PORT_3
 
-#define STRAIGHT_POWER (40.0)
+// #define STRAIGHT_POWER (40.0)
 #define M_D_DEGREE (30.0)
 #define M_D_POWER (20.0)
 #define M_U_POWER (20.0)
@@ -86,36 +86,36 @@ void DrawStar()
 	char str[20];
 
 	// draw 1
-	float centimeter = 16;
+	// float centimeter = 16;
 	float npc = 5;
 	float back = 5;
 	int power = 40;
 
-	DrawStraight(1, 25.7f, power / 2, 1);
-	DrawStraight(1, npc, power / 2, 0);
+	DrawStraight(true, 25.7f, power / 2, 1);
+	DrawStraight(true, npc, power / 2, 0);
 
 	TurnRightWithGyro(145);
 	DrawStraight(0, back, power / 2, 0);
 
-	DrawStraight(1, 28.6f, power / 2, 1);
-	DrawStraight(1, npc, power / 2, 0);
+	DrawStraight(true, 28.6f, power / 2, 1);
+	DrawStraight(true, npc, power / 2, 0);
 
 	TurnRightWithGyro(144);
 	DrawStraight(0, back, power / 2, 0);
 
-	DrawStraight(1, 29.3f, power / 2, 1);
-	DrawStraight(1, npc, power / 2, 0);
+	DrawStraight(true, 29.3f, power / 2, 1);
+	DrawStraight(true, npc, power / 2, 0);
 
 	TurnRightWithGyro(139);
 	DrawStraight(0, back, power / 2, 0);
 
-	DrawStraight(1, 29.0f, power / 2, 1);
-	DrawStraight(1, npc, power / 2, 0);
+	DrawStraight(true, 29.0f, power / 2, 1);
+	DrawStraight(true, npc, power / 2, 0);
 
 	TurnRightWithGyro(145);
 	DrawStraight(0, back, power / 2, 0);
 
-	DrawStraight(1, 27.3f, power / 2, 1);
+	DrawStraight(true, 27.3f, power / 2, 1);
 }
 
 void DrawTriangle()
@@ -128,27 +128,27 @@ void DrawTriangle()
 	int fDigree = forward;
 	int bDigree = back;
 
-	DrawStraight(1, 15.0f, power / 2, 1);
-	DrawStraight(1, 5.0f, power / 2, 0);
+	DrawStraight(true, 15.0f, power / 2, 1);
+	DrawStraight(true, 5.0f, power / 2, 0);
 
 	TurnRightWithGyro(135);
 	DrawStraight(0, back, power / 2, 0);
 
-	DrawStraight(1, 21.2f, power / 2, 1);
-	DrawStraight(1, 5.0f, power / 2, 0);
+	DrawStraight(true, 21.2f, power / 2, 1);
+	DrawStraight(true, 5.0f, power / 2, 0);
 
 	TurnRightWithGyro(135);
 	DrawStraight(0, back, power / 2, 0);
 
-	DrawStraight(1, 15.0f, power / 2, 1);
+	DrawStraight(true, 15.0f, power / 2, 1);
 
 	// for (int i = 0; i < 3; i++)
 	// {
 	//     if (i == 1)
-	//         DrawStraight(1, 25, power, 1);
+	//         DrawStraight(true, 25, power, 1);
 	//     else
-	//         DrawStraight(1, 15, power, 1);
-	//     DrawStraight(1, 5, power, 0);
+	//         DrawStraight(true, 15, power, 1);
+	//     DrawStraight(true, 5, power, 0);
 	//     TurnRightWithGyro(triangleRotate);
 	//     // if ( i == 1) TurnRightWithGyro(40);
 	//     DrawStraight(0, bDigree, power, 0); // back
@@ -167,9 +167,9 @@ void DrawSquare() // ok
 
 	for (int i = 0; i < 4; i++)
 	{
-		// if ( i == 2) DrawStraight(1, 22, power, 1);
-		DrawStraight(1, 15, power, 1);
-		DrawStraight(1, 5, power, 0);
+		// if ( i == 2) DrawStraight(true, 22, power, 1);
+		DrawStraight(true, 15, power, 1);
+		DrawStraight(true, 5, power, 0);
 		TurnRightWithGyro(squareRotate);
 		// if ( i == 1) TurnLeftWithGyro(20);
 		DrawStraight(0, bDigree, power, 0); // back
@@ -186,7 +186,7 @@ void DrawCircle() // ok
 	int fDigree = forward;
 	int bDigree = back;
 
-	DrawStraight(1, fDigree, power, 0);
+	DrawStraight(true, fDigree, power, 0);
 	MiddleMotorDown();
 	ev3_motor_rotate(L_M_PORT, 1600, 40, true);
 	MiddleMotorUp();
@@ -251,7 +251,7 @@ void run_task(intptr_t unused)
 	{
 	case 1: // cir
 
-		DrawStraight(1, 2, 40, 0);
+		DrawStraight(true, 2, 40, 0);
 		DrawCircle();
 		break;
 	case 2: // tri

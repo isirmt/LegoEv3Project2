@@ -132,86 +132,86 @@ void run_task(intptr_t unused)
     case 1:
     case 2:
     case 3:
-        DrawStraight(1, length, 40, 1);
+        DrawStraight(true, length, 40, 1);
         if (distance == 1)
             break;
         TurnRightWithGyro(90);
-        DrawStraight(1, 3, 40, 0);
+        DrawStraight(true, 3, 40, 0);
         TurnRightWithGyro(90);
         DrawStraight(0, backLength, 40, 0);
-        DrawStraight(1, length, 40, 1);
+        DrawStraight(true, length, 40, 1);
 
         if (distance == 2)
             break;
         TurnLeftWithGyro(90);
-        DrawStraight(1, 3, 40, 0);
+        DrawStraight(true, 3, 40, 0);
         TurnLeftWithGyro(90);
         DrawStraight(0, backLength, 40, 0);
-        DrawStraight(1, length, 40, 1);
+        DrawStraight(true, length, 40, 1);
         break;
     case 4:
-        DrawStraight(1, length, 40, 1);
+        DrawStraight(true, length, 40, 1);
         TurnRightWithGyro(90);
-        DrawStraight(1, 3, 40, 0);
+        DrawStraight(true, 3, 40, 0);
 
         TurnRightWithGyro(60);
         DrawStraight(0, backLength, 40, 0);
-        DrawStraight(1, 9, 40, 1);
+        DrawStraight(true, 9, 40, 1);
         TurnLeftWithGyro(90);
         DrawStraight(0, backLength, 40, 0);
-        DrawStraight(1, 9, 40, 1);
+        DrawStraight(true, 9, 40, 1);
         TRaDrawVaTR();
         break;
     case 5:
     case 6:
     case 7:
     case 8:
-        DrawStraight(1, length, 40, 0);
+        DrawStraight(true, length, 40, 0);
         TurnRightWithGyro(90);
-        DrawStraight(1, 3, 40, 0);
+        DrawStraight(true, 3, 40, 0);
 
         TurnRightWithGyro(60);
         DrawStraight(0, backLength, 40, 0);
-        DrawStraight(1, 9, 40, 1);
+        DrawStraight(true, 9, 40, 1);
         TurnLeftWithGyro(90);
         DrawStraight(0, backLength, 40, 0);
-        DrawStraight(1, 9, 40, 1);
+        DrawStraight(true, 9, 40, 1);
         TRaDrawVaTR();
         if (distance == 5)
             break;
         TurnRightWithGyro(60);
-        DrawStraight(1, 3, 40, 0);
+        DrawStraight(true, 3, 40, 0);
         TurnRightWithGyro(90);
         DrawStraight(0, backLength, 40, 0);
-        DrawStraight(1, length, 40, 1);
+        DrawStraight(true, length, 40, 1);
         if (distance == 6)
             break;
         TurnLeftWithGyro(90);
-        DrawStraight(1, 3, 40, 0);
+        DrawStraight(true, 3, 40, 0);
         TurnLeftWithGyro(90);
         DrawStraight(0, backLength, 40, 0);
-        DrawStraight(1, length, 40, 1);
+        DrawStraight(true, length, 40, 1);
         if (distance == 7)
             break;
         TurnRightWithGyro(60);
-        DrawStraight(1, 3, 40, 0);
+        DrawStraight(true, 3, 40, 0);
         TurnRightWithGyro(90);
         DrawStraight(0, backLength, 40, 0);
-        DrawStraight(1, length, 40, 1);
+        DrawStraight(true, length, 40, 1);
         break;
     case 9:
-        DrawStraight(1, length, 40, 1);
+        DrawStraight(true, length, 40, 1);
         TurnRightWithGyro(90);
-        DrawStraight(1, 3, 40, 0);
+        DrawStraight(true, 3, 40, 0);
         TurnRightWithGyro(60);
         DrawStraight(0, backLength, 40, 0);
-        DrawStraight(1, 9, 40, 1);
+        DrawStraight(true, 9, 40, 1);
         TurnLeftWithGyro(120);
         DrawStraight(0, backLength, 40, 0);
-        DrawStraight(1, length, 40, 0);
+        DrawStraight(true, length, 40, 0);
         TurnLeftWithGyro(120);
         DrawStraight(0, backLength, 40, 0);
-        DrawStraight(1, 9, 40, 0);
+        DrawStraight(true, 9, 40, 0);
         break;
     default:
         break;
