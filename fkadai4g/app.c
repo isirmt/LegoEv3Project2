@@ -105,6 +105,7 @@ inline void TurnLeftWithGyro(int digree)
 void run_task(intptr_t unused)
 {
     int power = 20;
+    char str[20];
     int distance = (int)ev3_ultrasonic_sensor_get_distance(ultraSonic_sensor);
     tslp_tsk(2000);
     ev3_motor_rotate(L_motor, (int)(0.5 / 17.5 * 360), power, false);
@@ -112,7 +113,8 @@ void run_task(intptr_t unused)
     KILL_MOTOR();
 
     distance = (int)ev3_ultrasonic_sensor_get_distance(ultraSonic_sensor);
-
+    sprintf(str, "%4d", distance);
+    ev3_lcd_draw_string(str, 0, 0);
     distance /= 10;
 
     int length = 8;

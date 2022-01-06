@@ -107,6 +107,7 @@ void run_task(intptr_t unused)
 	int power = 20;
 	float back = 5;
 	int16_t distance;
+	char str[20];
 	distance = (int)ev3_ultrasonic_sensor_get_distance(ultraSonic_sensor);
 	tslp_tsk(3000); // 待機用
 	distance = 20;
@@ -120,6 +121,8 @@ void run_task(intptr_t unused)
 
 		distance = (int)ev3_ultrasonic_sensor_get_distance(ultraSonic_sensor);
 		tslp_tsk(1000);
+		sprintf(str, "%4d", distance);
+		ev3_lcd_draw_string(str, 0, 0);
 
 		if (distance <= 10)
 		{
