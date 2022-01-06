@@ -48,14 +48,14 @@ inline void MiddleMotorUp(void)
 
 void DrawStraight(int bf, int centimeter, int power, int withPen) // 1 : forward, 0 : back
 {
-    if (bf == 0)
+    if (!bf)
         centimeter *= -1;
-    if (withPen == 1)
+    if (withPen)
         MiddleMotorDown();
-    ev3_motor_rotate(L_motor, (int)(centimeter / 17.5 * 360), power, false);
-    ev3_motor_rotate(R_motor, (int)(centimeter / 17.5 * 360), power, true);
+    ev3_motor_rotate(L_M_PORT, (int)(centimeter / 17.5 * 360), power, false);
+    ev3_motor_rotate(R_M_PORT, (int)(centimeter / 17.5 * 360), power, true);
     KILL_MOTOR();
-    if (withPen == 1)
+    if (withPen)
         MiddleMotorUp();
 }
 
@@ -64,8 +64,8 @@ inline void ForwardAndaWrite(float centimeter)
     int power = 20;
     MiddleMotorDown();
     // draw 1
-    ev3_motor_rotate(L_motor, (int)(centimeter / 17.5 * 360), power, false);
-    ev3_motor_rotate(R_motor, (int)(centimeter / 17.5 * 360), power, true);
+    ev3_motor_rotate(L_M_PORT, (int)(centimeter / 17.5 * 360), power, false);
+    ev3_motor_rotate(R_M_PORT, (int)(centimeter / 17.5 * 360), power, true);
     KILL_MOTOR();
     MiddleMotorUp();
 }
@@ -75,8 +75,8 @@ inline void TurnRightWithGyro(int digree)
     ev3_gyro_sensor_reset(gyro_sensor);
     while (true)
     {
-        ev3_motor_rotate(L_motor, 10, 30, false);
-        ev3_motor_rotate(R_motor, -10, 30, true);
+        ev3_motor_rotate(L_M_PORT, 10, 30, false);
+        ev3_motor_rotate(R_M_PORT, -10, 30, true);
         if (ev3_gyro_sensor_get_angle(gyro_sensor) >= digree)
         {
             KILL_MOTOR();
@@ -91,8 +91,8 @@ inline void TurnLeftWithGyro(int digree)
     ev3_gyro_sensor_reset(gyro_sensor);
     while (true)
     {
-        ev3_motor_rotate(L_motor, -10, 30, false);
-        ev3_motor_rotate(R_motor, 10, 30, true);
+        ev3_motor_rotate(L_M_PORT, -10, 30, false);
+        ev3_motor_rotate(R_M_PORT, 10, 30, true);
         if (ev3_gyro_sensor_get_angle(gyro_sensor) <= -digree)
         {
             KILL_MOTOR();
@@ -108,8 +108,8 @@ void run_task(intptr_t unused)
     char str[20];
     int distance = (int)ev3_ultrasonic_sensor_get_distance(ultraSonic_sensor);
     tslp_tsk(2000);
-    ev3_motor_rotate(L_motor, (int)(0.5 / 17.5 * 360), power, false);
-    ev3_motor_rotate(R_motor, (int)(0.5 / 17.5 * 360), power, true);
+    ev3_motor_rotate(L_M_PORT, (int)(0.5 / 17.5 * 360), power, false);
+    ev3_motor_rotate(R_M_PORT, (int)(0.5 / 17.5 * 360), power, true);
     KILL_MOTOR();
 
     distance = (int)ev3_ultrasonic_sensor_get_distance(ultraSonic_sensor);
@@ -128,7 +128,7 @@ void run_task(intptr_t unused)
     case 1:
     case 2:
     case 3:
-        DrawStraight(true, length, power, 1);
+        DrawStraight(true, length, power, true);
         DrawStraight(true, npc, power, 0);
 
         if (distance == 1)
@@ -139,7 +139,7 @@ void run_task(intptr_t unused)
         TurnRightWithGyro(90);
         DrawStraight(false, backLength, power, 0);
 
-        DrawStraight(true, length, power, 1);
+        DrawStraight(true, length, power, true);
         DrawStraight(true, npc, power, 0);
 
         if (distance == 2)
@@ -150,12 +150,12 @@ void run_task(intptr_t unused)
         TurnLeftWithGyro(90);
         DrawStraight(false, backLength, power, 0);
 
-        DrawStraight(true, length, power, 1);
+        DrawStraight(true, length, power, true);
         DrawStraight(true, npc, power, 0);
 
         break;
     case 4:
-        DrawStraight(true, length, power, 1);
+        DrawStraight(true, length, power, true);
         DrawStraight(true, npc, power, 0);
 
         TurnRightWithGyro(90);
@@ -164,13 +164,13 @@ void run_task(intptr_t unused)
         TurnRightWithGyro(60);
         DrawStraight(false, backLength, power, 0);
 
-        DrawStraight(true, 9, power, 1);
+        DrawStraight(true, 9, power, true);
         DrawStraight(true, npc, power, 0);
 
         TurnLeftWithGyro(90);
         DrawStraight(false, backLength, power, 0);
 
-        DrawStraight(true, 9, power, 1);
+        DrawStraight(true, 9, power, true);
         break;
     case 5:
     case 6:
@@ -185,13 +185,13 @@ void run_task(intptr_t unused)
         TurnRightWithGyro(60);
         DrawStraight(false, backLength, power, 0);
 
-        DrawStraight(true, 9, power, 1);
+        DrawStraight(true, 9, power, true);
         DrawStraight(true, npc, power, 0);
 
         TurnLeftWithGyro(90);
         DrawStraight(false, backLength, power, 0);
 
-        DrawStraight(true, 9, power, 1);
+        DrawStraight(true, 9, power, true);
         DrawStraight(true, npc, power, 0);
 
         if (distance == 5)
@@ -202,7 +202,7 @@ void run_task(intptr_t unused)
         TurnRightWithGyro(90);
         DrawStraight(false, backLength, power, 0);
 
-        DrawStraight(true, length, power, 1);
+        DrawStraight(true, length, power, true);
         DrawStraight(true, npc, power, 0);
 
         if (distance == 6)
@@ -214,7 +214,7 @@ void run_task(intptr_t unused)
         TurnLeftWithGyro(90);
         DrawStraight(false, backLength, power, 0);
 
-        DrawStraight(true, length, power, 1);
+        DrawStraight(true, length, power, true);
         DrawStraight(true, npc, power, 0);
 
         if (distance == 7)
@@ -226,11 +226,11 @@ void run_task(intptr_t unused)
         TurnRightWithGyro(90);
         DrawStraight(false, backLength, power, 0);
 
-        DrawStraight(true, length, power, 1);
+        DrawStraight(true, length, power, true);
 
         break;
     case 9:
-        DrawStraight(true, length, power, 1);
+        DrawStraight(true, length, power, true);
         DrawStraight(true, npc, power, 0);
 
         TurnRightWithGyro(90);
@@ -238,7 +238,7 @@ void run_task(intptr_t unused)
         TurnRightWithGyro(60);
         DrawStraight(false, backLength, power, 0);
 
-        DrawStraight(true, 9, power, 1);
+        DrawStraight(true, 9, power, true);
         DrawStraight(true, npc, power, 0);
 
         TurnLeftWithGyro(120);
@@ -261,9 +261,9 @@ void run_task(intptr_t unused)
 void main_task(intptr_t unused)
 {
     // ev3_sensor_config(gyro_sensor,GYRO_SENSOR);
-    ev3_motor_config(L_motor, LARGE_MOTOR);
-    ev3_motor_config(R_motor, LARGE_MOTOR);
-    ev3_motor_config(M_motor, MEDIUM_MOTOR);
+    ev3_motor_config(L_M_PORT, LARGE_MOTOR);
+    ev3_motor_config(R_M_PORT, LARGE_MOTOR);
+    ev3_motor_config(M_M_PORT, MEDIUM_MOTOR);
 
     ev3_sensor_config(ultraSonic_sensor, ULTRASONIC_SENSOR);
 
