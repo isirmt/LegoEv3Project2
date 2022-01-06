@@ -31,8 +31,7 @@
 #define SUPERLATIVE_SWIVEL(digree, power) (ev3_motor_rotate(R_M_PORT, digree, power, false), ev3_motor_rotate(L_M_PORT, -digree, power, true))
 #define GyroReset() (ev3_gyro_sensor_reset(gyro_sensor), tslp_tsk(1000))
 
-// 1.0 : forward, 0.0 : BACK
-void DrawStraight(bool bf, float centimeter, int power, bool withPen)
+inline void DrawStraight(bool bf, float centimeter, int power, bool withPen)
 {
 	if (!bf)
 		centimeter *= -1.0;
@@ -43,35 +42,30 @@ void DrawStraight(bool bf, float centimeter, int power, bool withPen)
 	if (withPen)
 		MiddleMotorUp();
 }
+// #define TurnWhileMeasuringAngle (SUPERLATIVE_SWIVEL(-10.0, 30.0), tslp_tsk(50); if (ev3_gyro_sensor_get_angle(gyro_sensor) >= digree) break;)
 
 inline void TurnRightWithGyro(int digree)
 {
 	GyroReset();
 	while (true)
 	{
-		SUPERLATIVE_SWIVEL(-10.0, 30.0);
+		SUPERLATIVE_SWIVEL(-10.0, 30.0), tslp_tsk(50);
 		if (ev3_gyro_sensor_get_angle(gyro_sensor) >= digree)
-		{
-			KILL_MOTOR();
 			break;
-		}
-		tslp_tsk(50);
 	}
+	KILL_MOTOR();
 }
-
 inline void TurnLeftWithGyro(int digree)
 {
 	GyroReset();
 	while (true)
 	{
 		SUPERLATIVE_SWIVEL(10.0, 30.0);
-		if (ev3_gyro_sensor_get_angle(gyro_sensor) <= -digree)
-		{
-			KILL_MOTOR();
-			break;
-		}
 		tslp_tsk(50);
+		if (ev3_gyro_sensor_get_angle(gyro_sensor) <= -digree)
+			break;
 	}
+	KILL_MOTOR();
 }
 
 void run_task(intptr_t unused)

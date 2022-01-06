@@ -6,6 +6,7 @@
 #else
 #include "kernel_cfg.h"
 #endif
+#include <stdbool.h>
 
 #define gyro_sensor EV3_PORT_2
 #define color_sensor EV3_PORT_4
@@ -32,13 +33,6 @@
 
 const uint32_t WAIT_TIME_MS = 100;
 
-inline void Stop()
-{
-    ev3_motor_stop(L_motor, true);
-    ev3_motor_stop(R_motor, true);
-    tslp_tsk(WAIT_TIME_MS);
-}
-
 inline void MiddleMotorDown(void)
 {
     ev3_motor_stop(M_M_PORT, true);
@@ -62,7 +56,7 @@ void DrawStraight(int bf, int centimeter, int power, int withPen) // 1 : forward
         MiddleMotorDown();
     ev3_motor_rotate(L_motor, (int)(centimeter / 17.5 * 360), power, false);
     ev3_motor_rotate(R_motor, (int)(centimeter / 17.5 * 360), power, true);
-    Stop();
+    KILL_MOTOR();
     if (withPen == 1)
         MiddleMotorUp();
 }
@@ -75,20 +69,20 @@ inline void ForwardAndaWrite(float centimeter)
     // draw 1
     ev3_motor_rotate(L_motor, (int)(centimeter / 17.5 * 360), power, false);
     ev3_motor_rotate(R_motor, (int)(centimeter / 17.5 * 360), power, true);
-    Stop();
+    KILL_MOTOR();
     MiddleMotorUp();
 }
 
 inline void TurnRightWithGyro(int digree)
 {
     ev3_gyro_sensor_reset(gyro_sensor);
-    while (1)
+    while (true)
     {
         ev3_motor_rotate(L_motor, 10, 30, false);
         ev3_motor_rotate(R_motor, -10, 30, true);
         if (ev3_gyro_sensor_get_angle(gyro_sensor) >= digree)
         {
-            Stop();
+            KILL_MOTOR();
             break;
         }
         tslp_tsk(50);
@@ -98,13 +92,13 @@ inline void TurnRightWithGyro(int digree)
 inline void TurnLeftWithGyro(int digree)
 {
     ev3_gyro_sensor_reset(gyro_sensor);
-    while (1)
+    while (true)
     {
         ev3_motor_rotate(L_motor, -10, 30, false);
         ev3_motor_rotate(R_motor, 10, 30, true);
         if (ev3_gyro_sensor_get_angle(gyro_sensor) <= -digree)
         {
-            Stop();
+            KILL_MOTOR();
             break;
         }
         tslp_tsk(50);
@@ -120,7 +114,7 @@ void run_task(intptr_t unused)
     tslp_tsk(2000);
     ev3_motor_rotate(L_motor, (int)(0.5 / 17.5 * 360), power, false);
     ev3_motor_rotate(R_motor, (int)(0.5 / 17.5 * 360), power, true);
-    Stop();
+    KILL_MOTOR();
 
     distance = (int)ev3_ultrasonic_sensor_get_distance(ultraSonic_sensor);
 
@@ -189,7 +183,7 @@ void run_task(intptr_t unused)
         DrawStraight(1, npc, power, 0);
 
         TurnRightWithGyro(90);
-        //DrawStraight(1, npc, power, 0);
+        // DrawStraight(1, npc, power, 0);
 
         TurnRightWithGyro(60);
         DrawStraight(0, backLength, power, 0);
