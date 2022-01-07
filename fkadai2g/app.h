@@ -1,22 +1,19 @@
 /*
-*ŠÂ‹«\’zŠm”F—p@ƒTƒ“ƒvƒ‹ƒvƒƒOƒ‰ƒ€(00_sample_tone)
-*/
-
+ *ï¿½Â‹ï¿½ï¿½\ï¿½zï¿½mï¿½Fï¿½pï¿½@ï¿½Tï¿½ï¿½ï¿½vï¿½ï¿½ï¿½vï¿½ï¿½ï¿½Oï¿½ï¿½ï¿½ï¿½(00_sample_tone)
+ */
 /*
-*ƒ^[ƒQƒbƒgˆË‘¶‚Ì’è‹`
-*/
+ *ï¿½^ï¿½[ï¿½Qï¿½bï¿½gï¿½Ë‘ï¿½ï¿½Ì’ï¿½`
+ */
 #include "target_test.h"
-
 /*
-*ƒ^[ƒQƒbƒg‚ÉˆË‘¶‚·‚é‰Â”\«‚Ì‚ ‚é’è”‚Ì’è‹`
-*/
+ *ï¿½^ï¿½[ï¿½Qï¿½bï¿½gï¿½ÉˆË‘ï¿½ï¿½ï¿½ï¿½ï¿½Â”\ï¿½ï¿½ï¿½Ì‚ï¿½ï¿½ï¿½è”ï¿½Ì’ï¿½`
+ */
 #ifndef STACK_SIZE
-#define STACK_SIZE  4096   /*ƒ^ƒXƒN‚ÌƒXƒ^ƒbƒNƒTƒCƒY*/
-#endif /*STACK_SIZE*/
-
+#define STACK_SIZE 4096 /*ï¿½^ï¿½Xï¿½Nï¿½ÌƒXï¿½^ï¿½bï¿½Nï¿½Tï¿½Cï¿½Y*/
+#endif					/*STACK_SIZE*/
 /*
-*ŠÖ”‚Ìƒvƒƒgƒ^ƒCƒvéŒ¾
-*/
+ *ï¿½Öï¿½ï¿½Ìƒvï¿½ï¿½ï¿½gï¿½^ï¿½Cï¿½vï¿½éŒ¾
+ */
 #ifndef TOPPERS_MACRO_ONLY
 extern void main_task(intptr_t exinf);
 extern void run_task(intptr_t exinf);
