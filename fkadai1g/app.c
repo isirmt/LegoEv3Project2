@@ -54,18 +54,6 @@ inline void TurnRightWithGyro(int digree)
 	}
 	KILL_MOTOR();
 }
-inline void TurnLeftWithGyro(int digree)
-{
-	GyroReset();
-	while (true)
-	{
-		SUPERLATIVE_SWIVEL(10.0, 30.0);
-		tslp_tsk(50);
-		if (ev3_gyro_sensor_get_angle(gyro_sensor) <= -digree)
-			break;
-	}
-	KILL_MOTOR();
-}
 
 void run_task(intptr_t unused)
 {
@@ -83,7 +71,7 @@ void run_task(intptr_t unused)
 	DrawStraight(false, BACK, STRAIGHT_POWER / 2.0, false);
 	DrawStraight(true, 16.1f, STRAIGHT_POWER / 2.0, true);
 	DrawStraight(true, NPC, STRAIGHT_POWER / 2.0, false);
-	TurnRightWithGyro(145);
+	TurnRightWithGyro(144);
 	DrawStraight(false, BACK, STRAIGHT_POWER / 2.0, false);
 	DrawStraight(true, 15.1f, STRAIGHT_POWER / 2.0, true);
 }
