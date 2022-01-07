@@ -1,0 +1,12 @@
+{
+	"markdownlint.config": {
+		"MD028": false,
+		"MD025": {
+			"front_matter_title": ""
+		}
+	},
+	"files.associations": {
+		"*.ASM": "i8080-macroasm",
+		"settings.h": "c"
+	}
+}
