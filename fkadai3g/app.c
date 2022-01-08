@@ -28,7 +28,7 @@
 #define SUPERLATIVE_SWIVEL(digree, power) (ev3_motor_rotate(R_M_PORT, digree, power, false), ev3_motor_rotate(L_M_PORT, -digree, power, true))
 #define GyroReset() (ev3_gyro_sensor_reset(gyro_sensor), tslp_tsk(1000))
 #define WAIT_TIME_MS (100.0)
-void DrawStraight(int bf, int centimeter, int power, int withPen) // 1 : forward, 0 : BACK
+void DrawStraight(int bf, int centimeter, int power, int withPen)
 {
 	if (!bf)
 		centimeter *= -1;
@@ -71,7 +71,7 @@ void run_task(intptr_t unused)
 {
 	int16_t distance;
 	char str[20];
-	tslp_tsk(3000); // 待機用
+	tslp_tsk(3000);
 	int bDigree = BACK;
 	while (true)
 	{
