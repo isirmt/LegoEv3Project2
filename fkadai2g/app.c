@@ -27,9 +27,6 @@
 #define STRAIGHT(digree, power) (ev3_motor_rotate(L_M_PORT, digree, power, false), ev3_motor_rotate(R_M_PORT, digree, power, true))
 #define SUPERLATIVE_SWIVEL(digree, power) (ev3_motor_rotate(R_M_PORT, digree, power, false), ev3_motor_rotate(L_M_PORT, -digree, power, true))
 #define GyroReset() (ev3_gyro_sensor_reset(gyro_sensor), tslp_tsk(1500))
-#define BLACK 6
-#define WHITE 91
-#define ROTATE_MODE 0
 inline void DrawStraight(bool bf, float centimeter, int power, bool withPen)
 {
 	if (!bf)
@@ -48,20 +45,6 @@ inline void TurnRightWithGyro(int digree)
 	{
 		SUPERLATIVE_SWIVEL(-10.0, 30.0);
 		if (ev3_gyro_sensor_get_angle(gyro_sensor) >= digree)
-		{
-			KILL_MOTOR();
-			break;
-		}
-		tslp_tsk(50);
-	}
-}
-inline void TurnLeftWithGyro(int digree)
-{
-	GyroReset();
-	while (true)
-	{
-		SUPERLATIVE_SWIVEL(10.0, 30.0);
-		if (ev3_gyro_sensor_get_angle(gyro_sensor) <= -digree)
 		{
 			KILL_MOTOR();
 			break;
@@ -122,41 +105,34 @@ void DrawCircle()
 void run_task(intptr_t unused)
 {
 	float tireCir = 17.5;
-	int shape = 0;
 	while (true)
 	{
-		int bc = 0;
-		ev3_motor_rotate(L_M_PORT, (int)(360 / tireCir), STRAIGHT_POWER, false);
-		ev3_motor_rotate(R_M_PORT, (int)(360 / tireCir), STRAIGHT_POWER, true);
+		bool bc = false;
+		STRAIGHT(360.0 / tireCir, STRAIGHT_POWER);
 		tslp_tsk(50);
-		colorid_t now_color = ev3_color_sensor_get_color(color_sensor);
-		switch (now_color)
+		switch (ev3_color_sensor_get_color(color_sensor))
 		{
-#if ROTATE_MODE
-		case COLOR_BLACK:
-			ev3_motor_rotate(L_M_PORT, -(int)(3.14 * size * 90 / 360), STRAIGHT_POWER, false);
-			ev3_motor_rotate(R_M_PORT, (int)(3.14 * size * 90 / 360), STRAIGHT_POWER, true);
-			ev3_motor_rotate(L_M_PORT, (int)(3 / tireCir * 360), STRAIGHT_POWER, false);
-			ev3_motor_rotate(R_M_PORT, (int)(3 / tireCir * 360), STRAIGHT_POWER, true);
-			bc = 0;
-			break;
-#else
-#endif
 		case COLOR_RED:
-			shape = 1;
-			bc = 1;
+			DrawStraight(true, 2, 40, false);
+			DrawCircle();
+			bc = true;
 			break;
 		case COLOR_GREEN:
-			shape = 2;
-			bc = 1;
+			KILL_MOTOR();
+			DrawTriangle();
+			bc = true;
 			break;
 		case COLOR_YELLOW:
-			shape = 3;
-			bc = 1;
+			DrawStraight(false, 2, 20, false);
+			KILL_MOTOR();
+			DrawSquare();
+			bc = true;
 			break;
 		case COLOR_BLUE:
-			shape = 4;
-			bc = 1;
+			DrawStraight(false, 12.1f, 20, false);
+			KILL_MOTOR();
+			DrawStar();
+			bc = true;
 			break;
 		default:
 			break;
@@ -164,27 +140,6 @@ void run_task(intptr_t unused)
 		if (bc)
 			break;
 		tslp_tsk(WAIT_TIME_MS);
-	}
-	switch (shape)
-	{
-	case 1:
-		DrawStraight(true, 2, 40, false);
-		DrawCircle();
-		break;
-	case 2:
-		KILL_MOTOR();
-		DrawTriangle();
-		break;
-	case 3:
-		DrawStraight(false, 2, 20, false);
-		KILL_MOTOR();
-		DrawSquare();
-		break;
-	case 4:
-		DrawStraight(false, 12.1f, 20, false);
-		KILL_MOTOR();
-		DrawStar();
-		break;
 	}
 }
 void main_task(intptr_t unused)

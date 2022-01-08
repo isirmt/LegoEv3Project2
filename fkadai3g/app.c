@@ -28,7 +28,7 @@
 #define SUPERLATIVE_SWIVEL(digree, power) (ev3_motor_rotate(R_M_PORT, digree, power, false), ev3_motor_rotate(L_M_PORT, -digree, power, true))
 #define GyroReset() (ev3_gyro_sensor_reset(gyro_sensor), tslp_tsk(1000))
 #define WAIT_TIME_MS (100.0)
-void DrawStraight(int bf, int centimeter, int power, int withPen) // 1 : forward, 0 : BACK
+void DrawStraight(int bf, int centimeter, int power, int withPen)
 {
 	if (!bf)
 		centimeter *= -1;
@@ -71,8 +71,7 @@ void run_task(intptr_t unused)
 {
 	int16_t distance;
 	char str[20];
-	distance = (int)ev3_ultrasonic_sensor_get_distance(ultraSonic_sensor);
-	tslp_tsk(3000); // 待機用
+	tslp_tsk(3000);
 	int bDigree = BACK;
 	while (true)
 	{
@@ -90,12 +89,12 @@ void run_task(intptr_t unused)
 	DrawStraight(false, 10, STRAIGHT_POWER, true);
 	DrawStraight(true, 5, STRAIGHT_POWER, false);
 	TurnLeftWithGyro(76);
-	DrawStraight(false, bDigree, STRAIGHT_POWER, false);
+	DrawStraight(false, BACK, STRAIGHT_POWER, false);
 	DrawStraight(true, 10, STRAIGHT_POWER, true);
 	DrawStraight(true, 3, STRAIGHT_POWER, false);
 	TurnRightWithGyro(122);
-	DrawStraight(false, bDigree, STRAIGHT_POWER, false);
-	DrawStraight(true, (int)(10.0f * 1.41f), STRAIGHT_POWER, true);
+	DrawStraight(false, BACK, STRAIGHT_POWER, false);
+	DrawStraight(true, 14.1f, STRAIGHT_POWER, true);
 }
 void main_task(intptr_t unused)
 {
